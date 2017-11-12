@@ -7,6 +7,7 @@
 
 #include "i2C.h"
 #include "msp.h"
+#include "gpio.h"
 
 
 extern uint8_t i2c_RX_array[16];
@@ -35,34 +36,30 @@ extern uint8_t TX_index;;
 void i2c_MASTER_Configure(){
 
     //:TODO configure GPIO pins for the correct modewe need secondary mode
-i2c_B1__MASTER_PIN_CONFIGURE();
 
 
     //set UCSWRT = 1
 EUSCI_B1->CTLW0  = UCSWRST; //set to a 1
 
-EUSCI_B1->CTLW0 &= ~(UCSLA10 | UCMM ); //7 bit address, single master
-EUSCI_B1->CTLW0 |= UCMST | UCMODE_3 |  UCSSEL__SMCLK | UCTR  | UCSYNC | UCGCEN ; // master mode, i2c, sysstem clock, transmitter, sync, respond general call, and byte count
-EUSCI_B1->CTLW1 |= UCASTP_2;
-
-EUSCI_B1->TBCNT = 0x0010; //16 bytes
-EUSCI_B1->BRW = 0x08; // divide SMCLK by 8
-
+EUSCI_B1->CTLW0 |= UCMST | UCMODE_3 |  UCSSEL__SMCLK   | UCSYNC; // master mode, i2c, sysstem clock, transmitter, sync, respond general call, and byte count
+EUSCI_B1->BRW = 0x0008; // divide SMCLK by 8
+i2c_B1__MASTER_PIN_CONFIGURE();
 EUSCI_B1->CTLW0 &= ~UCSWRST; //set to 0
 
 //Interrupts
-    UCB1IE = UCRXIE0 | UCNACKIE | UCBCNTIE; // interrupt on rx, nackt
-
-/*
- *  TODO: Find out if you need to set up the ack and nack and what they do when in master mode. who sends the ACK ? master or slave (gut says slave)
- *
- *
- * */
+    UCB1IE |= UCTXIE0 | UCRXIE0 | UCNACKIE | UCBCNTIE; // interrupt on rx, nackt
 
     NVIC_EnableIRQ(EUSCIB1_IRQn);
 }
 
-
+void set_Mode(uint8_t _mode){
+    if(_mode == 1){
+        EUSCI_B1->CTLW0 |= UCTR;
+    }
+    if(_mode ==0){
+        EUSCI_B1->CTLW0 &= ~UCTR;
+    }
+}
 
 /*
  *  Master talk to slave send data:
@@ -82,35 +79,44 @@ EUSCI_B1->CTLW0 &= ~UCSWRST; //set to 0
 
 
 void start_Transmission(uint8_t  _address){
-    EUSCI_B1->I2CSA |= _address; // this needs to be in hex!!., this line initializes, this will cause the TXIFG0 flag to be set
 
-    EUSCI_B1->CTLW0 &= ~UCSLA10;
     EUSCI_B1->CTLW0 |= UCTXSTT;
-    i2cDelay();
 }
 
 void send_Data_TX(uint8_t _slave_Address, uint8_t * data,  uint8_t _length){
     start_Transmission(_slave_Address);
 
-    while(EUSCI_B1->STATW & UCBBUSY);
+
+
+  //  while(EUSCI_B1->STATW & UCBBUSY);
         //not busy
     uint8_t index;
     for(index = 0; index < _length;  index++){
         EUSCI_B1->TXBUF = data[index];
+    red_LED_Blink();
     }
     //:TODO: this is where a stop bit could be generated
 
     stop_Transmission(_slave_Address);
 }
 
-void stop_Transmission(uint8_t _adress){
+void stop_Transmission(uint8_t _address){
     EUSCI_B1->CTLW0 |= UCTXSTP; //send stop command;
 
-    EUSCI_B1->CTLW0 &= ~UCTXSTT; //send stop command;
+//    EUSCI_B1->CTLW0 &= ~UCTXSTT; //send stop command;
 }
 
 void EUSCIB1_IRQHandler(){
-        if(UCB1IFG & UCRXIFG){
+    if(UCB1IFG & UCTXIFG){
+        UCB1IFG &=~UCTXIFG;
+
+        UCB0TXBUF = 53;
+        //add whatever we receieved into the global array
+        UCB1CTLW0 |= UCTXSTP;
+
+    }
+
+if(UCB1IFG & UCRXIFG){
             UCB1IFG &=~UCRXIFG;
 
             //add whatever we receieved into the global array
@@ -129,6 +135,7 @@ void EUSCIB1_IRQHandler(){
             //we reached our number of bytes: 16
             UCB1IFG &= ~ UCB1BCNT;
         }
+
 
 }
 

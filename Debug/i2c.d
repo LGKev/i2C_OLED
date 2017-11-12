@@ -11,6 +11,8 @@ i2c.obj: C:/ti/ccsv7/ccs_base/arm/include/msp432p401r_classic.h
 i2c.obj: C:/ti/ccsv7/ccs_base/arm/include/CMSIS/core_cm4.h
 i2c.obj: C:/ti/ccsv7/ccs_base/arm/include/CMSIS/cmsis_compiler.h
 i2c.obj: C:/ti/ccsv7/ccs_base/arm/include/system_msp432p401r.h
+i2c.obj: ../gpio.h
+i2c.obj: ../i2C.h
 
 ../i2c.c: 
 ../i2C.h: 
@@ -23,3 +25,5 @@ C:/ti/ccsv7/ccs_base/arm/include/msp432p401r_classic.h:
 C:/ti/ccsv7/ccs_base/arm/include/CMSIS/core_cm4.h: 
 C:/ti/ccsv7/ccs_base/arm/include/CMSIS/cmsis_compiler.h: 
 C:/ti/ccsv7/ccs_base/arm/include/system_msp432p401r.h: 
+../gpio.h: 
+../i2C.h: 

@@ -26,6 +26,9 @@ void stop_Transmission(uint8_t _address);
 void send_Data_TX(uint8_t _slave_Address, uint8_t * data,  uint8_t length);
 
 
+//1 is transmit 0 is rx
+void set_Mode(uint8_t _mode);
+
 /*
  * Really simple delay, does nothing in function but provides enough delay for i2c SDA transitions
  **/
