@@ -9,6 +9,10 @@
 #include "msp.h"
 
 
+extern uint8_t i2c_RX_array[16];
+extern uint8_t RX_index;
+extern uint8_t i2c_TX_array[16];
+extern uint8_t TX_index;;
 
 /*    === === === === ===      Defines       === === === === === ===      */
 #define SLAVE_ADDRESS           (0x3C)
@@ -28,7 +32,7 @@
  *                                   p6.4 ucb1SDA //secondary
  *
  * */
-void i2c_configure(){
+void i2c_MASTER_Configure(){
 
     //:TODO configure GPIO pins for the correct modewe need secondary mode
 i2c_B1__MASTER_PIN_CONFIGURE();
@@ -38,16 +42,24 @@ i2c_B1__MASTER_PIN_CONFIGURE();
 EUSCI_B1->CTLW0  = UCSWRST; //set to a 1
 
 EUSCI_B1->CTLW0 &= ~(UCSLA10 | UCMM ); //7 bit address, single master
-EUSCI_B1->CTLW0 |= UCMST | UCMODE_3 |  UCSSEL__SMCLK | UCTR | UCTXSTP | UCTXSTT | UCSYNC | UCGCEN ; // master mode, i2c mode (11), SMCLK for input, Transmitter, stop condition, start condition, and finally sync always a 1
- //respond to general call
+EUSCI_B1->CTLW0 |= UCMST | UCMODE_3 |  UCSSEL__SMCLK | UCTR  | UCSYNC | UCGCEN ; // master mode, i2c, sysstem clock, transmitter, sync, respond general call, and byte count
+EUSCI_B1->CTLW1 |= UCASTP_2;
+
+EUSCI_B1->TBCNT = 0x0010; //16 bytes
+EUSCI_B1->BRW = 0x08; // divide SMCLK by 8
 
 EUSCI_B1->CTLW0 &= ~UCSWRST; //set to 0
+
+//Interrupts
+    UCB1IE = UCRXIE0 | UCNACKIE | UCBCNTIE; // interrupt on rx, nackt
 
 /*
  *  TODO: Find out if you need to set up the ack and nack and what they do when in master mode. who sends the ACK ? master or slave (gut says slave)
  *
  *
  * */
+
+    NVIC_EnableIRQ(EUSCIB1_IRQn);
 }
 
 
@@ -87,7 +99,41 @@ void send_Data_TX(uint8_t _slave_Address, uint8_t * data,  uint8_t _length){
         EUSCI_B1->TXBUF = data[index];
     }
     //:TODO: this is where a stop bit could be generated
+
+    stop_Transmission(_slave_Address);
 }
+
+void stop_Transmission(uint8_t _adress){
+    EUSCI_B1->CTLW0 |= UCTXSTP; //send stop command;
+
+    EUSCI_B1->CTLW0 &= ~UCTXSTT; //send stop command;
+}
+
+void EUSCIB1_IRQHandler(){
+        if(UCB1IFG & UCRXIFG){
+            UCB1IFG &=~UCRXIFG;
+
+            //add whatever we receieved into the global array
+            i2c_RX_array[RX_index] = UCB1RXBUF;
+            RX_index++;
+
+        }
+
+        if(UCB1IFG & UCNACKIFG){
+            UCB1IFG &=~UCNACKIFG;
+            //start command again!
+           EUSCI_B1->CTLW0 |= UCTXSTT;
+        }
+
+        if(UCB1IFG & UCB1BCNT){
+            //we reached our number of bytes: 16
+            UCB1IFG &= ~ UCB1BCNT;
+        }
+
+}
+
+
+
 
 
 

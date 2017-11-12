@@ -11,7 +11,7 @@
 #define I2C_H_
 
 
-void  i2c_configure();
+void  i2c_MASTER_Configure();
 
 
 /*

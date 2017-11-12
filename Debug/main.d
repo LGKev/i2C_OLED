@@ -12,6 +12,8 @@ main.obj: C:/ti/ccsv7/ccs_base/arm/include/CMSIS/cmsis_compiler.h
 main.obj: C:/ti/ccsv7/ccs_base/arm/include/system_msp432p401r.h
 main.obj: ../ssd1306.h
 main.obj: ../i2C.h
+main.obj: ../gpio.h
+main.obj: ../i2C.h
 
 ../main.c: 
 C:/ti/ccsv7/ccs_base/arm/include/msp.h: 
@@ -24,4 +26,6 @@ C:/ti/ccsv7/ccs_base/arm/include/CMSIS/core_cm4.h:
 C:/ti/ccsv7/ccs_base/arm/include/CMSIS/cmsis_compiler.h: 
 C:/ti/ccsv7/ccs_base/arm/include/system_msp432p401r.h: 
 ../ssd1306.h: 
+../i2C.h: 
+../gpio.h: 
 ../i2C.h: 
