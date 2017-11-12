@@ -12,8 +12,8 @@ void i2c_B1__MASTER_PIN_CONFIGURE()
 {
     //port 6 pin 5 is SCL
     //port 6 pin 4 is SDA
-    P6SEL0 &= ~(BIT5 | BIT4 );
-    P6SEL1 = BIT5 | BIT4;
+    P6SEL0 |= (BIT5 | BIT4 );
+  //  P6SEL1 = BIT5 | BIT4;
 
     //They might need external pull ups. configuring pull up internally now.
 

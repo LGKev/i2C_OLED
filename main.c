@@ -70,8 +70,12 @@ void main(void){
 
 
       while(1){
-          UCB1I2CSA = 6;
-          while(UCB1CTLW0 & UCTXSTP);
-          UCB1CTLW0 |= UCTR | UCTXSTT;
+
+          start_Transmission(6);
+          red_LED_Blink();
+
+//          UCB1I2CSA = 6;
+//          while(UCB1CTLW0 & UCTXSTP);
+//          UCB1CTLW0 |= UCTR | UCTXSTT;
       }
 }

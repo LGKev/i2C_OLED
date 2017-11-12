@@ -80,7 +80,10 @@ void set_Mode(uint8_t _mode){
 
 void start_Transmission(uint8_t  _address){
 
-    EUSCI_B1->CTLW0 |= UCTXSTT;
+//24.3.4.2.1 I2C, master transmitter mode
+UCB1I2CSA = _address;
+set_Mode(1);
+EUSCI_B1->CTLW0 |= UCTXSTT;
 }
 
 void send_Data_TX(uint8_t _slave_Address, uint8_t * data,  uint8_t _length){
