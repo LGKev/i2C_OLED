@@ -67,7 +67,12 @@ void main(void){
       red_LED_Blink();
 
 
+
       i2c_MASTER_Configure();
+
+      init_OLED_SSD1306();
+      clear_Screen(0x003C);
+
 
           __enable_irq();
 
@@ -79,7 +84,6 @@ void main(void){
 
 //       ssd1306_Command(0x003C, 0xAF);
 
-          clear_Screen(0x003C);
           draw_Square(0x003C);
 
 //         red_LED_Blink()
