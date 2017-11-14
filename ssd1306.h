@@ -29,11 +29,19 @@ void print_Display(uint8_t _address);
 
 
 
+
 /* @name:   ssd1306_Commmand
  *  @brief: Writes one of the SSD1306 commands. Uses I2c start_Transmission() and stop_Transmission()
  *  @input: Address of slave and the command desired to send.
  * */
 void ssd1306_Command(uint8_t _address, uint8_t _command);
+
+/*
+ *  @name: ss1306_DATA
+ *  @brief very similar to ssd1306_Command, but instead of writing 0x00 after slave address we write 0x40 to signify data to be placed into Graphical ram.
+ * */
+void ssd1306_DATA(uint8_t _address, uint8_t _data);
+
 
 
 /*

@@ -39,6 +39,7 @@ void wirte_Command(uint8_t );
 void send_Data_TX(uint8_t _slave_Address, uint8_t * _data, uint8_t length);
 
 
+
 //1 is transmit 0 is rx
 void set_Mode(uint8_t _mode);
 

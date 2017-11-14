@@ -76,6 +76,8 @@ void main(void){
 
           __enable_irq();
 
+          print_Display(0x003C);
+
 
       while(1){
 
@@ -86,16 +88,14 @@ void main(void){
 
 /*========================*//*========================*/ /*========================*/
           //test to see if i can display something
-          draw_Pixel(40, 40, 1);
-          draw_Pixel(40, 40, 0);
+
+          uint16_t count = 0;
+          for(count =0; count <30000; count++);
+
+          for(count =0; count <30000; count++);
 
 
-          draw_Pixel(10, 10, 1);
-          draw_Pixel(20, 20, 0);
 
-
-
-          print_Display(0x003C);
 /*========================*//*========================*/ /*========================*/
 
 
