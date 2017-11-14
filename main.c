@@ -59,7 +59,6 @@ volatile uint8_t TX_index = 0;
 //
 //}
 
-
 void main(void){
       WDT_A->CTL = WDT_A_CTL_PW | WDT_A_CTL_HOLD;     // stop watchdog timer
 
@@ -78,7 +77,10 @@ void main(void){
           // start_Transmission(0x003C);
 
 
-       ssd1306_Command(0x003C, 0xAF);
+//       ssd1306_Command(0x003C, 0xAF);
+
+          clear_Screen(0x003C);
+          draw_Square(0x003C);
 
 //         red_LED_Blink()
         // start_Transmission(0x007D);
