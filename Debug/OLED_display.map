@@ -1,7 +1,7 @@
 ******************************************************************************
                   TI ARM Linker PC v16.9.4                     
 ******************************************************************************
->> Linked Tue Nov 14 14:19:56 2017
+>> Linked Tue Nov 14 14:40:15 2017
 
 OUTPUT FILE NAME:   <OLED_display.out>
 ENTRY POINT SYMBOL: "_c_int00"  address: 00000b81
@@ -11,7 +11,7 @@ MEMORY CONFIGURATION
 
          name            origin    length      used     unused   attr    fill
 ----------------------  --------  ---------  --------  --------  ----  --------
-  MAIN                  00000000   00040000  00000e54  0003f1ac  R  X
+  MAIN                  00000000   00040000  00000e30  0003f1d0  R  X
   INFO                  00200000   00004000  00000000  00004000  R  X
   SRAM_CODE             01000000   00010000  0000061e  0000f9e2  RW X
   SRAM_DATA             20000000   00010000  0000061e  0000f9e2  RW  
@@ -21,10 +21,10 @@ SEGMENT ALLOCATION MAP
 
 run origin  load origin   length   init length attrs members
 ----------  ----------- ---------- ----------- ----- -------
-00000000    00000000    00000e58   00000e58    r-x
+00000000    00000000    00000e34   00000e34    r-x
   00000000    00000000    000000e4   000000e4    r-- .intvecs
   000000e4    000000e4    00000be0   00000be0    r-x .text
-  00000cc8    00000cc8    00000190   00000190    r-- .cinit
+  00000cc8    00000cc8    0000016c   0000016c    r-- .cinit
 20000000    20000000    0000041e   00000000    rw-
   20000000    20000000    0000041e   00000000    rw- .data
 2000fe00    2000fe00    00000200   00000000    rw-
@@ -61,11 +61,11 @@ section   page    origin      length       input sections
                   00000cc0    00000002                                   : mpu_init.obj (.text)
                   00000cc2    00000002                                   : startup.obj (.text)
 
-.cinit     0    00000cc8    00000190     
-                  00000cc8    0000017e     (.cinit..data.load) [load image, compression = lzss]
-                  00000e46    00000002     --HOLE-- [fill = 0]
-                  00000e48    00000008     (__TI_handler_table)
-                  00000e50    00000008     (__TI_cinit_table)
+.cinit     0    00000cc8    0000016c     
+                  00000cc8    00000159     (.cinit..data.load) [load image, compression = lzss]
+                  00000e21    00000003     --HOLE-- [fill = 0]
+                  00000e24    00000008     (__TI_handler_table)
+                  00000e2c    00000008     (__TI_cinit_table)
 
 .init_array 
 *          0    00000000    00000000     UNINITIALIZED
@@ -115,20 +115,20 @@ MODULE SUMMARY
        Total:                        682    0         48     
                                                              
        Stack:                        0      0         1024   
-       Linker Generated:             0      398       0      
+       Linker Generated:             0      361       0      
     +--+-----------------------------+------+---------+---------+
-       Grand Total:                  3040   626       3132   
+       Grand Total:                  3040   589       3132   
 
 
 LINKER GENERATED COPY TABLES
 
-__TI_cinit_table @ 00000e50 records: 1, size/record: 8, table size: 8
-	.data: load addr=00000cc8, load size=0000017e bytes, run addr=20000000, run size=0000041e bytes, compression=lzss
+__TI_cinit_table @ 00000e2c records: 1, size/record: 8, table size: 8
+	.data: load addr=00000cc8, load size=00000159 bytes, run addr=20000000, run size=0000041e bytes, compression=lzss
 
 
 LINKER GENERATED HANDLER TABLE
 
-__TI_handler_table @ 00000e48 records: 2, size/record: 4, table size: 8
+__TI_handler_table @ 00000e24 records: 2, size/record: 4, table size: 8
 	index: 0, handler: __TI_decompress_lzss
 	index: 1, handler: __TI_decompress_none
 
@@ -201,10 +201,10 @@ UNDEFED   SHT$$INIT_ARRAY$$Limit
 00000cbb  WDT_A_IRQHandler               
 20010000  __STACK_END                    
 00000200  __STACK_SIZE                   
-00000e50  __TI_CINIT_Base                
-00000e58  __TI_CINIT_Limit               
-00000e48  __TI_Handler_Table_Base        
-00000e50  __TI_Handler_Table_Limit       
+00000e2c  __TI_CINIT_Base                
+00000e34  __TI_CINIT_Limit               
+00000e24  __TI_Handler_Table_Base        
+00000e2c  __TI_Handler_Table_Limit       
 00000aa9  __TI_auto_init                 
 20000400  __TI_cleanup_ptr               
 00000b19  __TI_decompress_lzss           
@@ -356,10 +356,10 @@ address   name
 00000cbd  _system_pre_init               
 00000cc1  __mpu_init                     
 00000cc3  _system_post_cinit             
-00000e48  __TI_Handler_Table_Base        
-00000e50  __TI_CINIT_Base                
-00000e50  __TI_Handler_Table_Limit       
-00000e58  __TI_CINIT_Limit               
+00000e24  __TI_Handler_Table_Base        
+00000e2c  __TI_CINIT_Base                
+00000e2c  __TI_Handler_Table_Limit       
+00000e34  __TI_CINIT_Limit               
 20000000  i2c_RX_array                   
 20000400  __TI_cleanup_ptr               
 20000404  __TI_dtors_ptr                 
