@@ -71,13 +71,12 @@ void main(void){
       i2c_MASTER_Configure();
 
       init_OLED_SSD1306();
-      clear_Screen(0x003C);
+//      clear_Screen(0x003C);
 
 
           __enable_irq();
 
           print_Display(0x003C);
-
 
       while(1){
 
@@ -90,9 +89,6 @@ void main(void){
           //test to see if i can display something
 
           uint16_t count = 0;
-          for(count =0; count <30000; count++);
-
-          for(count =0; count <30000; count++);
 
 
 
