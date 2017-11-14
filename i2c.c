@@ -114,7 +114,7 @@ void EUSCIB1_IRQHandler(){
     if(UCB1IFG & UCTXIFG){
         UCB1IFG &=~UCTXIFG;
 
-        UCB1CTLW0 |= UCTXSTP;
+//        UCB1CTLW0 |= UCTXSTP;
     }
 
 if(UCB1IFG & UCRXIFG){

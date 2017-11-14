@@ -75,11 +75,11 @@ void main(void){
 
       while(1){
 
+          // start_Transmission(0x003C);
 
 
-        ssd1306_Command(0x003C, 0xA5);
+       ssd1306_Command(0x003C, 0xAF);
 
-         // start_Transmission(0x003C);
 //         red_LED_Blink()
         // start_Transmission(0x007D);
 
