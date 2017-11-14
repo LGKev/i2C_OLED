@@ -16,6 +16,18 @@
 void init_OLED_SSD1306();
 
 
+/* very basic draw a single pixel...*/
+void draw_Pixel(uint16_t _x, uint16_t _y,uint16_t color);
+
+/*
+ *  @name: Print_Display
+ *  @brief: takes in the address of the display and comences the sequence to display info on the scrren
+ * */
+void print_Display(uint8_t _address);
+
+
+
+
 
 /* @name:   ssd1306_Commmand
  *  @brief: Writes one of the SSD1306 commands. Uses I2c start_Transmission() and stop_Transmission()

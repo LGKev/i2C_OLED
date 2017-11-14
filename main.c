@@ -84,7 +84,20 @@ void main(void){
 
 //       ssd1306_Command(0x003C, 0xAF);
 
-          draw_Square(0x003C);
+/*========================*//*========================*/ /*========================*/
+          //test to see if i can display something
+          draw_Pixel(40, 40, 1);
+          draw_Pixel(40, 40, 0);
+
+
+          draw_Pixel(10, 10, 1);
+          draw_Pixel(20, 20, 0);
+
+
+
+          print_Display(0x003C);
+/*========================*//*========================*/ /*========================*/
+
 
 //         red_LED_Blink()
         // start_Transmission(0x007D);
