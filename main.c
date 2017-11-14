@@ -48,6 +48,9 @@ volatile uint8_t TX_index = 0;
 //
 //            start_Transmission(0x003C); //I want to see the UCSSTT flag cleared after transmission of addres!
 //            // I want to see UCTX
+
+
+
 //
 //		   // send_Data_TX(0x003C, "123", 3);
 //
@@ -71,8 +74,10 @@ void main(void){
 
       while(1){
 
-          start_Transmission(6);
-          red_LED_Blink();
+          start_Transmission(0x003C);
+         red_LED_Blink();
+        // start_Transmission(0x007D);
+
 
 //          UCB1I2CSA = 6;
 //          while(UCB1CTLW0 & UCTXSTP);

@@ -16,7 +16,6 @@ void i2c_B1__MASTER_PIN_CONFIGURE()
    P6SEL1&= ~(BIT5 | BIT4);
 
     //They might need external pull ups. configuring pull up internally now.
-
     P6DIR &= ~(BIT4|BIT5);
     P6REN |= (BIT4|BIT5);
     P6OUT |= (BIT4|BIT5);
