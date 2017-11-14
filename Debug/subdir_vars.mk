@@ -9,50 +9,50 @@ CMD_SRCS += \
 ../msp432p401r.cmd 
 
 C_SRCS += \
-../SSD1306.c \
 ../gpio.c \
 ../i2c.c \
 ../main.c \
+../ssd1306.c \
 ../startup_msp432p401r_ccs.c \
 ../system_msp432p401r.c 
 
 C_DEPS += \
-./SSD1306.d \
 ./gpio.d \
 ./i2c.d \
 ./main.d \
+./ssd1306.d \
 ./startup_msp432p401r_ccs.d \
 ./system_msp432p401r.d 
 
 OBJS += \
-./SSD1306.obj \
 ./gpio.obj \
 ./i2c.obj \
 ./main.obj \
+./ssd1306.obj \
 ./startup_msp432p401r_ccs.obj \
 ./system_msp432p401r.obj 
 
 OBJS__QUOTED += \
-"SSD1306.obj" \
 "gpio.obj" \
 "i2c.obj" \
 "main.obj" \
+"ssd1306.obj" \
 "startup_msp432p401r_ccs.obj" \
 "system_msp432p401r.obj" 
 
 C_DEPS__QUOTED += \
-"SSD1306.d" \
 "gpio.d" \
 "i2c.d" \
 "main.d" \
+"ssd1306.d" \
 "startup_msp432p401r_ccs.d" \
 "system_msp432p401r.d" 
 
 C_SRCS__QUOTED += \
-"../SSD1306.c" \
 "../gpio.c" \
 "../i2c.c" \
 "../main.c" \
+"../ssd1306.c" \
 "../startup_msp432p401r_ccs.c" \
 "../system_msp432p401r.c" 
 

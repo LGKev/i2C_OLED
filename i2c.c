@@ -86,16 +86,14 @@ set_Mode(1);
 EUSCI_B1->CTLW0 |= UCTXSTT;
 }
 
-void send_Data_TX(uint8_t _slave_Address, uint8_t * data,  uint8_t _length){
+void send_Data_TX(uint8_t _slave_Address, uint8_t * _data,  uint8_t _length){
     start_Transmission(_slave_Address);
-
-
 
   //  while(EUSCI_B1->STATW & UCBBUSY);
         //not busy
     uint8_t index;
     for(index = 0; index < _length;  index++){
-        EUSCI_B1->TXBUF = data[index];
+        EUSCI_B1->TXBUF = _data[index];
     red_LED_Blink();
     }
     //:TODO: this is where a stop bit could be generated
@@ -105,18 +103,18 @@ void send_Data_TX(uint8_t _slave_Address, uint8_t * data,  uint8_t _length){
 
 void stop_Transmission(uint8_t _address){
     EUSCI_B1->CTLW0 |= UCTXSTP; //send stop command;
-
-//    EUSCI_B1->CTLW0 &= ~UCTXSTT; //send stop command;
 }
 
+/* ================================================================================================================*/
+/* ================================================================================================================*/
+/* ================================                          I2C ISR Handler                           =========================================*/
+/* ================================================================================================================*/
+/* ================================================================================================================*/
 void EUSCIB1_IRQHandler(){
     if(UCB1IFG & UCTXIFG){
         UCB1IFG &=~UCTXIFG;
 
-        UCB0TXBUF = 53;
-        //add whatever we receieved into the global array
         UCB1CTLW0 |= UCTXSTP;
-
     }
 
 if(UCB1IFG & UCRXIFG){
@@ -130,6 +128,9 @@ if(UCB1IFG & UCRXIFG){
 
         if(UCB1IFG & UCNACKIFG){
             UCB1IFG &=~UCNACKIFG;
+
+            red_LED_Blink();
+
             //start command again!
            EUSCI_B1->CTLW0 |= UCTXSTT;
         }

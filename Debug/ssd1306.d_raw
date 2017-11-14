@@ -1,0 +1,12 @@
+ssd1306.obj: ../ssd1306.c
+ssd1306.obj: C:/ti/ccsv7/ccs_base/arm/include/msp.h
+ssd1306.obj: C:\ti\ccsv7\ccs_base\arm\include\msp432p401r.h
+ssd1306.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.4.LTS/include/stdint.h
+ssd1306.obj: C:\ti\ccsv7\ccs_base\arm\include\msp_compatibility.h
+ssd1306.obj: C:/ti/ccsv7/ccs_base/arm/include/CMSIS/cmsis_ccs.h
+ssd1306.obj: C:\ti\ccsv7\ccs_base\arm\include\msp432p401r_classic.h
+ssd1306.obj: C:/ti/ccsv7/ccs_base/arm/include/CMSIS/core_cm4.h
+ssd1306.obj: C:\ti\ccsv7\ccs_base\arm\include\CMSIS\cmsis_compiler.h
+ssd1306.obj: C:\ti\ccsv7\ccs_base\arm\include\system_msp432p401r.h
+ssd1306.obj: ..\i2C.h
+ssd1306.obj: ..\ssd1306.h
